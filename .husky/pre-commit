@@ -1,0 +1,64 @@
+# #!/bin/sh
+# . "$(dirname "$0")/_/husky.sh
+
+# echo ' Styling, testing and building your project before commiting'
+
+# # check Prettier
+# npm run check-format ||
+# (
+#     echo 'Prettier Check Failed. Run npm run format, add changes and try commit again'
+# )
+
+# # Check ESLint
+# npm run check-lint ||
+# (
+#     echo "ESLint Check Failed. Make the required changes listed above, add changes and try to commit again"
+#     false;
+# )
+
+# # Check tsconfig
+# npm run check-types ||
+# (
+#     echo "Failed type check. Make the changes required above, add changes and try to commit again"
+#     false;
+# )
+
+# npm run build ||
+# (
+#     echo "Your build failed. view the errors above"
+#     false;
+# )
+
+# echo "Succes Committe"
+#!/bin/sh
+echo '🚀 Checking code before commit...'
+
+# Prettier check
+npm run check-format
+if [ $? -ne 0 ]; then
+  echo '❌ Failed: Prettier check. Run `npm run format`, then `git add .` and try committing again.'
+  exit 1
+fi
+
+# ESLint check
+npm run check-lint
+if [ $? -ne 0 ]; then
+  echo '❌ Failed: ESLint check. Fix the listed errors, then `git add .` and try committing again.'
+  exit 1
+fi
+
+# TypeScript check
+npm run check-types
+if [ $? -ne 0 ]; then
+  echo '❌ Failed: TypeScript check. Fix the listed type errors, then `git add .` and try committing again.'
+  exit 1
+fi
+
+# Build check
+npm run build
+if [ $? -ne 0 ]; then
+  echo '❌ Failed: The build process failed. Check the errors above.'
+  exit 1
+fi
+
+echo "✅ Success: Commit accepted!"

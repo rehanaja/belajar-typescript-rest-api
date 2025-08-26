@@ -1,9 +1,9 @@
-import express, { Application, NextFunction, Request, Response } from 'express'
+import express, { Application, Request, Response } from 'express'
 
 const app: Application = express()
 const port: number = 4000
 
-app.use('/health', (req: Request, res: Response, next: NextFunction) => {
+app.use('/health', (req: Request, res: Response) => {
   res.status(200).send({
     data: 'Hello World'
   })
